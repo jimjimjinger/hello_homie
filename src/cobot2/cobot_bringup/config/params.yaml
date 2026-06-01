@@ -1,0 +1,60 @@
+# -----------------------------------------------
+# 1. 로봇 제어 및 동작 파라미터 (executer)
+# -----------------------------------------------
+executer:
+  ros__parameters:
+    # 기본 이동 속도 및 가속도 (base_action.py)
+    vel_linear: 200.0
+    acc_linear: 50.0
+    vel_angular: 70.0
+    acc_angular: 70.0
+    
+    # 그리퍼 조작 관련
+    tilt_angle: -5.0
+    gripper_length: 0.0
+    min_depth: 20.0      # 바닥 충돌 방지 최소 높이 (mm)
+    depth_offset: 0.0  # 계산된 표면 깊이로부터 내려가는 거리 (mm)
+
+# -----------------------------------------------
+# 2. 상태 및 에러 복구 파라미터 (state_manager)
+# -----------------------------------------------
+state_manager:
+  ros__parameters:
+    max_retries: 2       # 에러 발생 시 최대 재시도 횟수
+
+# -----------------------------------------------
+# 3. 비전 AI 파라미터 (object_detection_node)
+# -----------------------------------------------
+object_detection:
+  ros__parameters:
+    model_name: "yolo"
+    yolo_model_filename: "best.pt"
+    yolo_class_name_json: "class_name.json"
+    confidence_threshold: 0.5  # 탐지 신뢰도 하한선
+    iou_threshold: 0.5         # 중복 탐지 박스 제거(NMS) 기준점
+
+# -----------------------------------------------
+# 4. 음성 인식 및 LLM 파라미터 (voice_to_command)
+# -----------------------------------------------
+voice_to_command:
+  ros__parameters:
+    # 마이크 세팅
+    mic_chunk: 12000
+    mic_rate: 48000
+    record_seconds: 5
+    
+    # 웨이크업 워드 세팅
+    wakeup_model: "wassup_homie.onnx"
+    wakeup_threshold: 0.001
+    
+    # LLM 세팅
+    llm_model: "gpt-4o"
+    llm_temperature: 0.0
+
+# -----------------------------------------------
+# 5. 음성 합성(TTS) 파라미터 (voice_client_node)
+# -----------------------------------------------
+voice_client:
+  ros__parameters:
+    tts_model: "tts-1"
+    tts_voice: "onyx"
